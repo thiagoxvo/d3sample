@@ -1,0 +1,13 @@
+{
+  "name": "d3sample",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.0.3",
+    "jquery": "~1.11.0",
+    "d3": "~3.4.6", 
+    "crossfilter":"~1.3.3",
+    "dcjs": "https://github.com/dc-js/dc.js.git#master",
+    "colorbrewer":"1.0.0"
+  },
+  "devDependencies": {}
+}
