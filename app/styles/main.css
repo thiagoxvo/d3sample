@@ -25,7 +25,15 @@ body {
 }
 
 path {
-  fill: oldlace;
   stroke: #666;
   stroke-width: .5px;
+}
+
+path.inactive {
+  fill: #CCC
+}
+
+path.active {
+  stroke-width: 1.5px;
+  stroke: #000;
 }
