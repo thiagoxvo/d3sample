@@ -29,7 +29,7 @@ d3.json("data/br.json", function(error, br) {
 
     load_people()
 
-    register_click_listener()
+    register_places_listeners()
 });
 
 
@@ -58,23 +58,33 @@ function density_by_quantity(state) {
   else if(percentage <= 1) return "highest";
 }
 
-function register_click_listener() {
-  d3.selectAll('.place').on('click', function(event) {
-    var state = d3.select(this).datum().properties
-    var people = filter_people_by_state(state.UF);
+function register_places_listeners() {
+  d3.selectAll('.place')
+    .on('click', function(event) {
+      var state = d3.select(this).datum().properties
+      var people = filter_people_by_state(state.UF);
 
-    state_box
-      .html("")
-      .append("h3")
-      .text(state.ESTADO+" - "+(window.people_per_state[state.UF] || 0))
-
-    people.forEach(function(person){
       state_box
-        .append('span')
-        .append('p')
-        .text(person["Name"]+" - "+person["City of birth"])
+        .html("")
+        .append("h3")
+        .text(state.ESTADO+" - "+(window.people_per_state[state.UF] || 0))
+
+      people.forEach(function(person){
+        state_box
+          .append('span')
+          .append('p')
+          .text(person["Name"]+" - "+person["City of birth"])
+      });
+
+
+      d3.selectAll('.place').classed({"inactive": true, "active": false})
+      var path = d3.select(this)
+      path.classed({"active": true, "inactive": false})
+    })
+
+    svg.on('mouseenter', function() {
+        d3.selectAll('.place').classed({"active": false, "inactive": false})
     });
-  });
 }
 
 function filter_people_by_state(state) {
