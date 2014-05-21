@@ -29,7 +29,7 @@ d3.json("data/br.json", function(error, br) {
 
     load_people()
 
-    register_click_listener()
+    register_places_listeners()
 });
 
 
@@ -58,61 +58,65 @@ function density_by_quantity(state) {
   else if(percentage <= 1) return "highest";
 }
 
-function register_click_listener() {
-
+function register_places_listeners() {
   var panel_info = d3.select(".right-column")
-
-  d3.selectAll('.place').on('click', function(event) {
-    var state = d3.select(this).datum().properties
-    var people = filter_people_by_state(state.UF);
-
-
-    var panel = '<div class="panel panel-info">'
-                +'<div class="panel-heading">'
-                +'<h3 class="panel-title">'+state.ESTADO+" - "+(window.people_per_state[state.UF] || 0)+'</h3>'
-                +'</div>'
-                  +'<div class="panel-body">'
-                    +'<ul></ul>'
-                  +'</div>'
-                +'</div>';
-
-    panel_info
-      .html(panel)
-
-    var info = "<li>no TWers here :(</li>";
+  d3.selectAll('.place')
+    .on('click', function(event) {
       
-    if (people.length > 0){
-      people.forEach(function(person){
+      var state = d3.select(this).datum().properties
+          var people = filter_people_by_state(state.UF);
 
-          var person_item =  d3.select(".panel-body ul")
-            .append("li")
-            .attr("class", "photo")
-            .append("div")
-            .attr("class", "row")
 
-            person_item
-              .append("div")
-              .attr("class", "col-md-5")
-              .append("img")
-              .attr("src", "http://graph.facebook.com/sarfraz.anees/picture?type=square")
+          var panel = '<div class="panel panel-info">'
+                      +'<div class="panel-heading">'
+                      +'<h3 class="panel-title">'+state.ESTADO+" - "+(window.people_per_state[state.UF] || 0)+'</h3>'
+                      +'</div>'
+                        +'<div class="panel-body">'
+                          +'<ul></ul>'
+                        +'</div>'
+                      +'</div>';
+
+          panel_info
+            .html(panel)
+
+          var info = "<li>no TWers here :(</li>";
             
-            person_item
-              .append("div")
-              .attr("class", "col-md-5 person-info")
-              .append("p")
-              .text(person["Name"])
+          if (people.length > 0){
+            people.forEach(function(person){
 
-            person_item.select("div .person-info")
-              .append("p")
-              .text(person["City of birth"])
+                var person_item =  d3.select(".panel-body ul")
+                  .append("li")
+                  .attr("class", "photo")
+                  .append("div")
+                  .attr("class", "row")
 
-      });  
-    }
+                  person_item
+                    .append("div")
+                    .attr("class", "col-md-5")
+                    .append("img")
+                    .attr("src", "http://graph.facebook.com/sarfraz.anees/picture?type=square")
+                  
+                  person_item
+                    .append("div")
+                    .attr("class", "col-md-5 person-info")
+                    .append("p")
+                    .text(person["Name"])
 
-    panel_info.select('.panel-body ul')
-      .append(info.node());
- 
-  });
+                  person_item.select("div .person-info")
+                    .append("p")
+                    .text(person["City of birth"])
+
+            });  
+          }
+
+      d3.selectAll('.place').classed({"inactive": true, "active": false})
+      var path = d3.select(this)
+      path.classed({"active": true, "inactive": false})
+    })
+
+    svg.on('mouseenter', function() {
+        d3.selectAll('.place').classed({"active": false, "inactive": false})
+    });
 }
 
 function filter_people_by_state(state) {
