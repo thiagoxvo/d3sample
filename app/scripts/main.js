@@ -6,11 +6,11 @@ var projection = d3.geo.mercator()
 
 var path = d3.geo.path().projection(projection);
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(".left-column").append("svg")
     .attr("width", width)
     .attr("height", height)
 
-var state_box = d3.select('body')
+var state_box = d3.select(".right-column")
   .append('div')
   .attr('id', 'state-info')
 
@@ -60,15 +60,19 @@ function density_by_quantity(state) {
 
 function register_click_listener() {
   d3.selectAll('.place').on('click', function(event) {
-    var state = d3.select(this).datum().properties.UF
-    var people = filter_people_by_state(state);
+    var state = d3.select(this).datum().properties
+    var people = filter_people_by_state(state.UF);
 
-    state_box.html("")
+    state_box
+      .html("")
+      .append("h3")
+      .text(state.ESTADO+" - "+(window.people_per_state[state.UF] || 0))
+
     people.forEach(function(person){
       state_box
         .append('span')
         .append('p')
-        .text(person["Name"])
+        .text(person["Name"]+" - "+person["City of birth"])
     });
   });
 }
