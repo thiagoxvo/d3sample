@@ -10,6 +10,10 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
 
+var state_box = d3.select('body')
+  .append('div')
+  .attr('id', 'state-info')
+
 d3.json("data/br.json", function(error, br) {
   svg.selectAll("path")
     .data(br.features)
@@ -24,11 +28,13 @@ d3.json("data/br.json", function(error, br) {
     .attr("d", path);
 
     load_people()
+
+    register_click_listener()
 });
 
 
 function load_people() {
-  d3.csv("data/people.csv", function(people) {
+  d3.csv("data/realpeople.csv", function(people) {
     window.people = people;
     window.people_per_state = extract_people_per_state(people);
 
@@ -44,14 +50,35 @@ function load_people() {
 function density_by_quantity(state) {
   quantity = window.people_per_state[state] || 0;
   percentage = quantity / window.brazil_quantity;
-  console.log(state+" "+percentage)
   if(percentage == 0) return "none";
   else if(percentage < 0.2) return "lowest";
   else if(percentage < 0.4) return "low";
   else if(percentage < 0.6) return "medium";
   else if(percentage < 0.8) return "high";
   else if(percentage <= 1) return "highest";
+}
 
+function register_click_listener() {
+  d3.selectAll('.place').on('click', function(event) {
+    var state = d3.select(this).datum().properties.UF
+    var people = filter_people_by_state(state);
+
+    state_box.html("")
+    people.forEach(function(person){
+      state_box
+        .append('span')
+        .append('p')
+        .text(person["Name"])
+    });
+  });
+}
+
+function filter_people_by_state(state) {
+  people = window.people || [];
+  people_of_state = people.filter(function(person) {
+    return person["State of Birth"] == state;
+  });
+  return people_of_state;
 }
 
 function extract_people_per_state(people) {
@@ -59,11 +86,12 @@ function extract_people_per_state(people) {
   var brazil_quantity = 0;
   for(person in people) {
     brazil_quantity = brazil_quantity + 1;
+    state = people[person]["State of Birth"].toUpperCase()
     var person = people[person];
-    if(typeof(state_data[person.state]) == "undefined")
-      state_data[person.state] = 1;
+    if(typeof(state_data[state]) == "undefined")
+      state_data[state] = 1;
     else
-      state_data[person.state] = state_data[person.state] + 1;
+      state_data[state] = state_data[state] + 1;
   }
   window.brazil_quantity = brazil_quantity
   return state_data;

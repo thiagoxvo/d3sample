@@ -64,45 +64,14 @@ path:hover {
   stroke-width: 1;
 }*/
 
-/*/ brazil states*/
-.subunit-RS,
-.subunit-SC,
-.subunit-PR  { fill: #ddc; }
+.place { fill: #000; }
 
-.subunit-SP,
-.subunit-RJ,
-.subunit-MG,
-.subunit-ES { fill: #cdd; }
-
-.subunit-MT,
-.subunit-MS,
-.subunit-GO,
-.subunit-TO,
-.subunit-DF { fill: #cdc; }
-
-.subunit-AM,
-.subunit-RO,
-.subunit-RR,
-.subunit-AC,
-.subunit-PA,
-.subunit-AP { fill: #dcd; }
-
-.subunit-BA,
-.subunit-PE,
-.subunit-RN,
-.subunit-CE,
-.subunit-MA,
-.subunit-PI,
-.subunit-SE,
-.subunit-PB,
-.subunit-AL { fill: #ccd; }
-
-.none { fill: #FFF; }
-.lowest { fill: #DDD; }
-.low { fill: #BBB; }
-.medium { fill: #999 }
-.high { fill: #777 }
-.highest { fill: #555 }
+.none { fill: #fff; }
+.lowest { fill: #edf8e9; }
+.low { fill: #bae4b3; }
+.medium { fill: #74c476; }
+.high { fill: #31a354; }
+.highest { fill: #006d2c; }
 
 .place-label {
     font-size: 10px;
