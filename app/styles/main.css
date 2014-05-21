@@ -75,7 +75,7 @@ path:hover {
 .subunit-ES { fill: #cdd; }
 
 .subunit-MT,
-.subunit-MS, 
+.subunit-MS,
 .subunit-GO,
 .subunit-TO,
 .subunit-DF { fill: #cdc; }
@@ -97,12 +97,22 @@ path:hover {
 .subunit-PB,
 .subunit-AL { fill: #ccd; }
 
+.none { fill: #FFF; }
+.lowest { fill: #DDD; }
+.low { fill: #BBB; }
+.medium { fill: #999 }
+.high { fill: #777 }
+.highest { fill: #555 }
+
 .place-label {
     font-size: 10px;
 }
 
+body {
+  background-color:#F0F0F0;
+}
+
 svg {
-  background-color: lavender;
   border: 1px solid black;
 }
 
