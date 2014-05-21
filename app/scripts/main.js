@@ -90,11 +90,17 @@ function register_places_listeners() {
                   .append("div")
                   .attr("class", "row")
 
+                  var photo_url = "/styles/img/no-photo.png";
+                  if(person["Facebook"].trim().length > 0) {
+                    photo_url = "http://graph.facebook.com/"+person["Facebook"]+"/picture?type=square";
+                  }
+
+
                   person_item
                     .append("div")
                     .attr("class", "col-md-5")
                     .append("img")
-                    .attr("src", "http://graph.facebook.com/sarfraz.anees/picture?type=square")
+                    .attr("src", photo_url)
                   
                   person_item
                     .append("div")
