@@ -59,7 +59,7 @@ function density_by_quantity(state) {
 }
 
 function register_places_listeners() {
-  var panel_info = d3.select(".right-column")
+  var panel_info = d3.select(".people-container")
   d3.selectAll('.place')
     .on('click', function(event) {
       
@@ -67,7 +67,7 @@ function register_places_listeners() {
           var people = filter_people_by_state(state.UF);
 
 
-          var panel = '<div class="panel panel-info">'
+          var panel = '<div class="panel panel-default">'
                       +'<div class="panel-heading">'
                       +'<h3 class="panel-title">'+state.ESTADO+" - "+(window.people_per_state[state.UF] || 0)+'</h3>'
                       +'</div>'
