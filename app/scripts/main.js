@@ -51,10 +51,10 @@ function density_by_quantity(state) {
   quantity = window.people_per_state[state] || 0;
   percentage = quantity / window.brazil_quantity;
   if(percentage == 0) return "none";
-  else if(percentage < 0.2) return "lowest";
-  else if(percentage < 0.4) return "low";
-  else if(percentage < 0.6) return "medium";
-  else if(percentage < 0.8) return "high";
+  else if(percentage < 0.05) return "lowest";
+  else if(percentage < 0.1) return "low";
+  else if(percentage < 0.2) return "medium";
+  else if(percentage < 0.3) return "high";
   else if(percentage <= 1) return "highest";
 }
 
@@ -62,7 +62,7 @@ function register_places_listeners() {
   var panel_info = d3.select(".people-container")
   d3.selectAll('.place')
     .on('click', function(event) {
-      
+
       var state = d3.select(this).datum().properties
           var people = filter_people_by_state(state.UF);
 
@@ -80,7 +80,7 @@ function register_places_listeners() {
             .html(panel)
 
           var info = "<li>no TWers here :(</li>";
-            
+
           if (people.length > 0){
             people.forEach(function(person){
 
@@ -101,7 +101,7 @@ function register_places_listeners() {
                     .attr("class", "col-md-5")
                     .append("img")
                     .attr("src", photo_url)
-                  
+
                   person_item
                     .append("div")
                     .attr("class", "col-md-5 person-info")
@@ -112,7 +112,7 @@ function register_places_listeners() {
                     .append("p")
                     .text(person["City of birth"])
 
-            });  
+            });
           }
 
       d3.selectAll('.place').classed({"inactive": true, "active": false})
